@@ -6,7 +6,7 @@
 /*   By: iammar <iammar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:47:50 by iammar            #+#    #+#             */
-/*   Updated: 2024/12/15 20:29:17 by iammar           ###   ########.fr       */
+/*   Updated: 2024/12/18 14:34:52 by iammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	signal_send(int pid, unsigned char c)
 			pid_check = kill(pid, SIGUSR1);
 		if (pid_check == -1 && c != '\n')
 		{
-			write(1, "pid not found\n", 14);
+			write(1, "invalid pid\n", 14);
 			return ;
 		}
 		usleep(500);

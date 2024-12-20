@@ -11,10 +11,10 @@
 # **************************************************************************** #
 
 SRCC=client.c utils.c
+SRCS=server.c utils.c
 
 OBJC = $(SRCC:.c=.o)
 OBJCB = $(SRCCB:.c=.o)
-SRCS=server.c utils.c
 
 OBJS = $(SRCS:.c=.o)
 OBJSB = $(SRCSB:.c=.o)
