@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   client_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iammar <iammar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/13 21:47:50 by iammar            #+#    #+#             */
-/*   Updated: 2024/12/24 09:00:41 by iammar           ###   ########.fr       */
+/*   Created: 2024/12/21 20:16:51 by iammar            #+#    #+#             */
+/*   Updated: 2024/12/24 09:01:12 by iammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,20 @@ void	signal_send(pid_t pid, unsigned char c)
 			pid_check = kill(pid, SIGUSR2);
 		else
 			pid_check = kill(pid, SIGUSR1);
-		if (pid_check == -1 && c != '\n')
+		if (pid_check == -1)
 		{
-			write(1, "invalid pid\n", 14);
-			return ;
+			write(1, "invalid pid\n", 13);
+			exit(1);
 		}
 		usleep(500);
 		i--;
 	}
+}
+
+void	handle_signal_back(int signum)
+{
+	(void)signum;
+	write(1, "server: Message fully received\n", 32);
 }
 
 int	main(int ac, char **av)
@@ -45,17 +51,21 @@ int	main(int ac, char **av)
 	if (ac != 3)
 	{
 		write(1, "args should be : ./client <server_PID> <message>\n", 50);
-		return (0);
+		return (1);
 	}
+	signal(SIGUSR2, handle_signal_back);
 	msg = av[2];
 	pid = ft_atoi(av[1]);
-	if (pid == -1)
-		return (0);
+	if (pid <= 0)
+	{
+		write(1, "invalid pid\n", 13);
+		return (1);
+	}
 	while (*msg)
 	{
 		signal_send(pid, (unsigned char)*msg);
 		msg++;
 	}
-	signal_send(pid, '\n');
+	signal_send(pid, '\0');
 	return (0);
 }

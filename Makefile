@@ -1,45 +1,41 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: iammar <iammar@student.1337.ma>            +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/12/15 14:51:43 by iammar            #+#    #+#              #
-#    Updated: 2024/12/15 14:54:00 by iammar           ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
-SRCC=client.c utils.c
-SRCS=server.c utils.c
-
-OBJC = $(SRCC:.c=.o)
-OBJCB = $(SRCCB:.c=.o)
-
-OBJS = $(SRCS:.c=.o)
-OBJSB = $(SRCSB:.c=.o)
 
 CC = cc
+
 CFLAGS = -Wall -Wextra -Werror
 
-SERVER = server
+SRCC = client.c utils.c
+SRCCB = client_bonus.c utils_bonus.c
+
+SRCS = server.c utils.c
+SRCSB = server_bonus.c utils_bonus.c
+
 CLIENT = client
+CLIENTB = client_bonus
+SERVER = server
+SERVERB = server_bonus
 
-all:$(SERVER) $(CLIENT)
+.PHONY: all bonus clean
 
-$(SERVER): $(SRCS)
-			$(CC) $(CFLAGS) $(SRCS) -o server
+all: $(CLIENT) $(SERVER)
 
-$(CLIENT): $(SRCC)
-			$(CC) $(CFLAGS) $(SRCC) -o client
+bonus: $(CLIENTB) $(SERVERB)
 
+$(CLIENT): 
+	$(CC) $(CFLAGS) -o $(CLIENT) $(SRCC)
 
-clean: 
-		rm -rf $(OBJC) $(OBJS)
-		rm -rf $(OBJCB) $(OBJSB) 
+$(SERVER): 
+	$(CC) $(CFLAGS) -o $(SERVER) $(SRCS)
+
+$(CLIENTB): 
+	$(CC) $(CFLAGS) -o $(CLIENTB) $(SRCCB)
+
+$(SERVERB): 
+	$(CC) $(CFLAGS) -o $(SERVERB) $(SRCSB)
+
+clean:
+	@rm -f $(CLIENT) $(SERVER)
 
 fclean: clean
-		rm -rf $(SERVER) $(CLIENT)
-		rm -rf $(SERVER_BONUS) $(CLIENT_BONUS)
+	@rm -f $(CLIENTB) $(SERVERB)
 
-re :fclean all
+re: fclean all

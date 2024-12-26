@@ -6,7 +6,7 @@
 /*   By: iammar <iammar@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 21:47:27 by iammar            #+#    #+#             */
-/*   Updated: 2024/12/15 20:07:35 by iammar           ###   ########.fr       */
+/*   Updated: 2024/12/23 20:50:57 by iammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@
 
 typedef struct s_data
 {
-	int		byte;
-	int		bit_count;
-	char	current_char;
+	int				bit;
+	int				bit_count;
+	char			character;
 
-}			t_data;
+}					t_data;
 
-void		ft_putnbr_fd(int n, int fd);
-int			ft_atoi(const char *str);
+void				ft_putnbr_fd(int n, int fd);
+int					ft_atoi(const char *str);
 #endif
